@@ -3,17 +3,17 @@ Train doc2query on MS MARCO with t5 from hgf
 
 The training data should contains source and target in each line, which should be separate by '\t'
 '''
-from transformers import T5Tokenizer, T5ForConditionalGeneration
-from transformers import Trainer, TrainingArguments
 import pandas as pd
 from torch.utils.data import Dataset
-import argparse
 import os
 import torch
+import argparse
+from transformers import T5Tokenizer, T5ForConditionalGeneration
+from transformers import Trainer, TrainingArguments
 
 hf_model = 'ai-forever/ruT5-large'
 # my_model = 'ai-forever/ruT5-large'
-my_model = './checkpoint-00'
+my_model = 'models_bss'
 
 class TrainerDataset(Dataset):
     def __init__(self, path):
@@ -39,10 +39,10 @@ train_data_path = os.path.join("dataset", "queries_answers_dataset_train_bss.txt
 
 parser = argparse.ArgumentParser(description='Train docTquery on more datasets')
 # my_model_path = os.path.join(os.getcwd(), "models_all_sys", my_model)
-my_model_path = os.path.join(os.getcwd(), "models_all_sys_with_bss")
-parser.add_argument('--pretrained_model_path', default=hf_model, help='pretrained model path')
+my_model_path = os.path.join(os.getcwd(), "models", my_model)
+parser.add_argument('--pretrained_model_path', default=my_model_path, help='pretrained model path')
 parser.add_argument('--train_data_path', default=train_data_path, required=False, help='training data path')
-parser.add_argument('--output_path', default="models_all_sys_with_bss_2", required=False, help='output directory path')
+parser.add_argument('--output_path', default="model_bss_write_support", required=False, help='output directory path')
 parser.add_argument('--epoch', default=10, type=int)
 parser.add_argument('--batch_size', default=10, type=int)
 parser.add_argument('--weight_decay', default=5e-5, type=float)

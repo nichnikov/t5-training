@@ -1,0 +1,5 @@
+sentence-transformers==2.2.2
+torch==2.0.1
+transformers==4.36.0
+accelerate==0.25.0
+pandas
